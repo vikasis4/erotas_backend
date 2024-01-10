@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require("path");
-const connectToDb = require('./mongodb')
+const connectToDb = require('./mongodb');
 
 /////////////////////////// ROUTE DECLARE /////////////////////////////
 const auth_routes = require('./routes/auth')
@@ -17,6 +17,7 @@ var make = path.join(__dirname, 'public');
 app.use(express.static(make));
 dotenv.config();
 const port = 3001;
+
 
 
 /////////////////////////// ROUTE USE /////////////////////////////
