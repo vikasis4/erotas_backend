@@ -8,6 +8,9 @@ const User = new mongoose.Schema({
         name: { type: 'string' },
         price: { type: 'number' },
         productId: { type: 'string' }
+    }],
+    tokens: [{
+        token: { type: 'string' }
     }]
 })
 

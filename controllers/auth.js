@@ -1,12 +1,16 @@
 const User = require('../modals/user');
-const SendOtp = require('../utils/otpGenrate')
+const SendOtp = require('../utils/otpGenrate');
+const { createToken, verifyToken } = require('../utils/jwtToken');
 
+////////////////////////////// LOGIN /////////////////////////////
 const login = async (req, res) => {
 
 }
+
+////////////////////////////// REGISTER /////////////////////////////
 const register = async (req, res) => {
-    const { email, name } = req.body.email;
     try {
+        const { email, name } = req.body;
         var user = await User.findOne({ email: email });
         if (user) {
             return res.json({ status: 'user' })
@@ -25,7 +29,27 @@ const register = async (req, res) => {
     }
 }
 
-const otpVerify = (req, res) => {
+////////////////////////////// OTP HANDLE /////////////////////////////
+const otpVerify = async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        var user = await User.findOne({ email: email });
+        if (!user) { return res.json({ status: 'error' }) };
+        if (user.otp === JSON.parse(otp)) {
+            var token = await createToken(user);
+            if (token === 'false') { return res.json({ status: 'error' }) };
+            await user.save();
+            res.json({ status: 'true', token })
+        } else {
+            res.json({ status: 'false' })
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({ status: 'error' })
+    }
+}
+
+const otpGenrate = (req, res) => {
     try {
 
     } catch (error) {
@@ -33,4 +57,18 @@ const otpVerify = (req, res) => {
         res.json({ status: 'error' })
     }
 }
-module.exports = { login, register, otpVerify }
+
+
+////////////// JWT TOKEN HANDLE //////////////////////////////////
+const tokenVerify = async (req, res) => {
+    try {
+        var { token } = req.params;
+        var data = await verifyToken(token);
+        res.json({ status: 'true', data });
+    } catch (error) {
+        console.log(error);
+        res.json({ status: 'error' })
+    }
+}
+
+module.exports = { login, register, otpVerify, otpGenrate, tokenVerify }
