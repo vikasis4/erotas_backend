@@ -11,10 +11,10 @@ const transporter = nodemailer.createTransport({
         pass: process.env.mail_pass,
     },
 });
-async function SendOtp(otp) {
-    const info = await transporter.sendMail({
+async function SendOtp(otp, email) {
+    await transporter.sendMail({
         from: process.env.mail_account,
-        to: "vikasxfile@gmail.com",
+        to: email,
         subject: "EROTAS - OTP Verification",
         html: `<b>Use this OTP to verify your credentials :- ${otp}</b>`,
     });

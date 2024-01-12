@@ -4,7 +4,22 @@ const { createToken, verifyToken } = require('../utils/jwtToken');
 
 ////////////////////////////// LOGIN /////////////////////////////
 const login = async (req, res) => {
-
+    try {
+        var { email } = req.body;
+        var user = await User.findOne({ email});
+        if (!user) {
+            res.json({status:'nouser'})
+            return 
+        }
+        var otp = Math.floor(1000 + Math.random() * 9000);
+        user.otp = otp;
+        await user.save();
+        await SendOtp(otp, email);
+        res.json({status:'true'})
+    } catch (error) {
+        console.log(error);
+        res.json({ status: 'error' })
+    }
 }
 
 ////////////////////////////// REGISTER /////////////////////////////
@@ -15,13 +30,13 @@ const register = async (req, res) => {
         if (user) {
             return res.json({ status: 'user' })
         }
-        var otp = Math.floor(1000 + Math.random() * 9000);
         await User.create({
             email,
             name,
             otp
         });
-        await SendOtp(otp);
+        var otp = Math.floor(1000 + Math.random() * 9000);
+        await SendOtp(otp, email);
         res.json({ status: 'true' })
     } catch (error) {
         console.log(error);
@@ -63,6 +78,7 @@ const otpGenrate = (req, res) => {
 const tokenVerify = async (req, res) => {
     try {
         var { token } = req.params;
+        if (token === 'null') { return res.json({ status: 'null' }) }
         var data = await verifyToken(token);
         res.json({ status: 'true', data });
     } catch (error) {
