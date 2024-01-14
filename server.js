@@ -23,7 +23,9 @@ app.use(express.static(make));
 dotenv.config();
 const port = 3001;
 
-
+app.get('/', (req, res) => {
+res.json({status:"Yes Server Is Working"})
+})
 
 /////////////////////////// ROUTE USE /////////////////////////////
 app.use('/api/auth', auth_routes)
