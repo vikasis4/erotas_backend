@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 var make = path.join(__dirname, 'public');
 app.use(express.static(make));
 dotenv.config();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => {
 res.json({status:"Yes Server Is Working"})
