@@ -32,6 +32,6 @@ app.use('/api/auth', auth_routes)
 app.use('/api/product', product_router)
 app.use('/api/cart', cart_router)
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
     console.log("Server is Listening at port : " + port);
 });
