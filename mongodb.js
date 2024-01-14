@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config()
 
 
-const URL = process.env.mongoConnectionString
+const URL = process.env.mongoLiveConnectionString
 mongoose.set("strictQuery", false);
 
 const connectToDb = async () => {
