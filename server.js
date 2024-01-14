@@ -8,6 +8,7 @@ const connectToDb = require('./mongodb');
 /////////////////////////// ROUTE DECLARE /////////////////////////////
 const auth_routes = require('./routes/auth')
 const product_router = require('./routes/product')
+const cart_router = require('./routes/cart')
 
 /////////////////////////// INITIALIZE /////////////////////////////
 const app = express();
@@ -27,6 +28,7 @@ const port = 3001;
 /////////////////////////// ROUTE USE /////////////////////////////
 app.use('/api/auth', auth_routes)
 app.use('/api/product', product_router)
+app.use('/api/cart', cart_router)
 
 app.listen(port, () => {
     console.log("Server is Listening at port : " + port);

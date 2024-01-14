@@ -7,7 +7,9 @@ const User = new mongoose.Schema({
     cart: [{
         name: { type: 'string' },
         price: { type: 'number' },
-        productId: { type: 'string' }
+        productId: { type: 'string' },
+        imageLink: { type: 'string' },
+        qty: { type: 'number', default: 1}
     }],
     tokens: [{
         token: { type: 'string' }
