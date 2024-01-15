@@ -30,12 +30,12 @@ const register = async (req, res) => {
         if (user) {
             return res.json({ status: 'user' })
         }
+        var otp = Math.floor(1000 + Math.random() * 9000);
         await User.create({
             email,
             name,
             otp
         });
-        var otp = Math.floor(1000 + Math.random() * 9000);
         await SendOtp(otp, email);
         res.json({ status: 'true' })
     } catch (error) {
