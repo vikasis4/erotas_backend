@@ -6,16 +6,16 @@ const { createToken, verifyToken } = require('../utils/jwtToken');
 const login = async (req, res) => {
     try {
         var { email } = req.body;
-        var user = await User.findOne({ email});
+        var user = await User.findOne({ email });
         if (!user) {
-            res.json({status:'nouser'})
-            return 
+            res.json({ status: 'nouser' })
+            return
         }
         var otp = Math.floor(1000 + Math.random() * 9000);
         user.otp = otp;
         await user.save();
         await SendOtp(otp, email);
-        res.json({status:'true'})
+        res.json({ status: 'true' })
     } catch (error) {
         console.log(error);
         res.json({ status: 'error' })
@@ -30,13 +30,13 @@ const register = async (req, res) => {
         if (user) {
             return res.json({ status: 'user' })
         }
-        var otp = Math.floor(1000 + Math.random() * 9000);
+        var newOtp = Math.floor(1000 + Math.random() * 9000);
         await User.create({
             email,
             name,
-            otp
+            otp: newOtp
         });
-        await SendOtp(otp, email);
+        await SendOtp(newOtp, email);
         res.json({ status: 'true' })
     } catch (error) {
         console.log(error);
