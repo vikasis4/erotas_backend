@@ -23,6 +23,10 @@ const AddToCart = async (req, res) => {
 const RemoveFromCart = async (req, res) => {
     try {
         var { userId, productId } = req.body;
+        if (!userId || !productId) {
+            res.json({ status: 'error' })
+            return            
+        }
         var user = await User.findById(userId);
         var index = user.cart.findIndex((data) => data.productId === productId);
         if (user.cart[index].qty === 1) {
