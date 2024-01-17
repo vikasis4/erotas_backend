@@ -80,7 +80,8 @@ const tokenVerify = async (req, res) => {
         var { token } = req.params;
         if (token === 'null') { return res.json({ status: 'null' }) }
         var data = await verifyToken(token);
-        res.json({ status: 'true', data });
+        if (data === false) {res.json({ status: 'wrong_token' })}
+        res.json({ status: 'true', info: data })
     } catch (error) {
         console.log(error);
         res.json({ status: 'error' })
