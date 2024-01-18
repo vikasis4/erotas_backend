@@ -14,10 +14,13 @@ const createOrder = async (req, res) => {
         receipt: "order_rcptid_11"
     };
     await instance.orders.create(options, function (err, order) {
-        console.log(order);
         res.json({ order })
     });
 
 }
+const handlePayment = async (req, res) => {
+    console.log(req.body);
+    res.json({status: 'Payment was successful'})
+}
 
-module.exports = createOrder
+module.exports = {createOrder, handlePayment}
