@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const Order = new mongoose.Schema({
     userId: { type: 'string', required: true },
     paymentId: { type: 'string', required: true },
+    orderId: { type: 'string', required: true },
     price: { type: 'number', required: true },
     trackingLink: { type: 'string', default: '' },
     shipmentCreated: { type: 'boolean', default: false },
+    delivered:{type: 'boolean', default: false},
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
     products: [{

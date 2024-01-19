@@ -20,7 +20,7 @@ const createOrder = async (req, res) => {
         key_id: rzp_key,
         key_secret: rzp_secret,
     });
-
+    
     var options = {
         amount: price*100,
         currency: "INR",
@@ -61,6 +61,7 @@ const handlePayment = async (req, res) => {
         await Order.create({
             userId: transaction.userId,
             paymentId:razorpay_payment_id,
+            orderId:razorpay_order_id,
             price: transaction.price,
             address:address[0],
             products
