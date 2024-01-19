@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
     res.json({ status: "Yes Server Is Working" })
 })
 
+
 /////////////////////////// ROUTE USE /////////////////////////////
 app.use('/api/auth', auth_routes)
 app.use('/api/product', product_router)

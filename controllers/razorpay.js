@@ -1,6 +1,10 @@
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
-const dotenv = require('dotenv')
+const User = require('../modals/user')
+const Order = require('../modals/order')
+const getPrice = require('../utils/getPrice')
+const Transaction = require('../modals/transactions');
+const dotenv = require('dotenv');
 dotenv.config()
 
 var rzp_key = process.env.rzp_test_id;
@@ -8,17 +12,26 @@ var rzp_secret = process.env.rzp_test_secret;
 
 const createOrder = async (req, res) => {
 
+    const { addressId, userId } = req.body;
+
+    var price = await getPrice(userId);
+
     var instance = new Razorpay({
         key_id: rzp_key,
         key_secret: rzp_secret,
     });
 
     var options = {
-        amount: 50000,
+        amount: price*100,
         currency: "INR",
-        receipt: "order_rcptid_11"
     };
-    instance.orders.create(options, function (err, order) {
+    instance.orders.create(options, async function (err, order) {
+        await Transaction.create({
+            addressId,
+            userId,
+            orderId: order.id,
+            price
+        })
         res.json({ order })
     });
 
@@ -34,6 +47,27 @@ const handlePayment = async (req, res) => {
         if (digest !== razorpay_signature) {
             return res.json({ status: 'error' })
         }
+
+        var transaction = await Transaction.findOne({ orderId: razorpay_order_id });
+        transaction.paymentId = razorpay_payment_id;
+        transaction.hash = razorpay_signature;
+        transaction.paid = true;
+        await transaction.save();
+
+        var user = await User.findById(transaction.userId);
+        var address = user.address.filter((state)=> state._id.toString() === transaction.addressId);
+        var products = user.cart;
+
+        await Order.create({
+            userId: transaction.userId,
+            paymentId:razorpay_payment_id,
+            price: transaction.price,
+            address:address[0],
+            products
+        })
+
+        user.cart = [];
+        await user.save()
 
         res.json({ status: 'true' })
     } catch (error) {
