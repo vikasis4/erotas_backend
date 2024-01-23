@@ -7,8 +7,8 @@ const Transaction = require('../modals/transactions');
 const dotenv = require('dotenv');
 dotenv.config()
 
-var rzp_key = process.env.rzp_live_id;
-var rzp_secret = process.env.rzp_live_secret;
+var rzp_key = process.env.rzp_test_id;
+var rzp_secret = process.env.rzp_test_secret;
 
 const createOrder = async (req, res) => {
 
