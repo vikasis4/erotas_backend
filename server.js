@@ -14,6 +14,7 @@ const rzp_router = require('./routes/razorpay')
 const address_router = require('./routes/address')
 const order_router = require('./routes/order')
 const support_router = require('./routes/support')
+const wishlist_router = require('./routes/wishList')
 /////////////////////////// INITIALIZE /////////////////////////////
 const app = express();
 app.use(cookieParser());
@@ -40,6 +41,7 @@ app.use('/api/order', order_router)
 app.use('/api/address', address_router)
 app.use('/api/product', product_router)
 app.use('/api/support', support_router)
+app.use('/api/wishlist', wishlist_router)
 
 app.listen(port, "0.0.0.0", () => {
     console.log("Server is Listening at port : " + port);

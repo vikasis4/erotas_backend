@@ -13,7 +13,10 @@ const User = new mongoose.Schema({
         landMark: { type: 'string', default: ''}
     }],
     wishList:[{
-        productId: { type: 'string'}
+        name: { type: 'string' },
+        price: { type: 'number' },
+        productId: { type: 'string' },
+        imageLink: { type: 'string' },
     }],
     cart: [{
         name: { type: 'string' },
