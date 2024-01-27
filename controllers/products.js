@@ -9,7 +9,7 @@ const AddProduct = async (req, res) => {
         res.json({ status: 'true' })
     } catch (error) {
         console.log(error);
-        res.json({ status: 'error' })
+        res.json({ status: 'error', error })
     }
 }
 
