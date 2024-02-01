@@ -4,6 +4,20 @@ const cors = require('cors');
 const path = require("path");
 const cookieParser = require('cookie-parser');
 const connectToDb = require('./mongodb');
+const { CronJob } = require('cron');
+const cleanTransactions = require('./cronjob/deleteTransactions');
+
+
+/////////////////////////// CRON JOBS /////////////////////////////
+new CronJob(
+    '0 1 * * *',
+    function () {
+        cleanTransactions()
+    },
+    null,
+    true,
+    'Asia/Kolkata'
+);
 
 
 /////////////////////////// ROUTE DECLARE /////////////////////////////
@@ -29,7 +43,7 @@ dotenv.config();
 const port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => {
-    res.json({ status: "Yes Server Is Working" })
+    res.json({ status: "Yes Server Is Working", date: new Date().toLocaleString()})
 })
 
 

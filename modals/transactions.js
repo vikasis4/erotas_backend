@@ -9,18 +9,7 @@ const Transaction = new mongoose.Schema({
     userId: { type: 'string' },
     addressId: { type: 'string' },
     paid: { type: 'boolean', default: false },
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now }
+}, { timestamps: true })
 
-})
-
-Transaction.pre('save', function (next) {
-    var now = new Date();
-    this.updated_at = now;
-    if (!this.created_at) {
-        this.created_at = now
-    }
-    next();
-});
 
 module.exports = mongoose.model('Transaction', Transaction)
