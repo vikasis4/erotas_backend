@@ -29,6 +29,7 @@ const address_router = require('./routes/address')
 const order_router = require('./routes/order')
 const support_router = require('./routes/support')
 const wishlist_router = require('./routes/wishList')
+const admin_router = require('./routes/admin')
 /////////////////////////// INITIALIZE /////////////////////////////
 const app = express();
 app.use(cookieParser());
@@ -52,6 +53,7 @@ app.use('/api/pay', rzp_router)
 app.use('/api/auth', auth_routes)
 app.use('/api/cart', cart_router)
 app.use('/api/order', order_router)
+app.use('/api/admin', admin_router)
 app.use('/api/address', address_router)
 app.use('/api/product', product_router)
 app.use('/api/support', support_router)
