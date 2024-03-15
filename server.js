@@ -7,7 +7,7 @@ const connectToDb = require('./mongodb');
 const { CronJob } = require('cron');
 const cleanTransactions = require('./cronjob/deleteTransactions');
 
-
+// const User = require('./modals/user');
 /////////////////////////// CRON JOBS /////////////////////////////
 new CronJob(
     '0 1 * * *',
@@ -44,10 +44,18 @@ dotenv.config();
 const port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => {
-    res.json({ status: "Yes Server Is Working", date: new Date().toLocaleString()})
+    res.json({ status: "Yes Server Is Working", date: new Date().toLocaleString() })
 })
 
+/////////////////Test////////////////////////////////////////////////
 
+// const test = async () => {
+//     var users = await User.find({}).skip(1).limit(2);
+//     console.log(users.length);
+//     console.log(users[0].name);
+//     console.log(users[users.length - 1].name);
+// }
+// test()
 /////////////////////////// ROUTE USE /////////////////////////////
 app.use('/api/pay', rzp_router)
 app.use('/api/auth', auth_routes)

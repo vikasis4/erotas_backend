@@ -4,6 +4,7 @@ dotenv.config()
 
 
 const URL = process.env.mongoLiveConnectionString
+// const URL = 'mongodb+srv://vikasisgen:qMvYX54J6E92GeGw@erota.3pfcjhe.mongodb.net/?retryWrites=true&w=majority'
 mongoose.set("strictQuery", false);
 
 const connectToDb = async () => {
