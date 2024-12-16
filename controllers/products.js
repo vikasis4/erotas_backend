@@ -25,6 +25,7 @@ const getProduct = async (req, res) => {
 }
 const getAll = async (req, res) => {
     try {
+        console.log('Working');
         var product = await Products.find({ });
         res.json({ status: 'true', product })
     } catch (error) {
