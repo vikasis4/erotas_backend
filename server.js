@@ -44,7 +44,7 @@ dotenv.config();
 const port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => {
-    res.json({ status: "Yes Server Is Working", date: new Date().toLocaleString() })
+    res.json({ status: "Yes Server Is Working on v1.2", date: new Date().toLocaleString() })
 })
 
 /////////////////Test////////////////////////////////////////////////
